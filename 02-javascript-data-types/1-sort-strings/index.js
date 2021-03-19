@@ -11,10 +11,8 @@ export function sortStrings(arr, param = 'asc') {
         newArr.sort((a,b) => a.localeCompare(b, 'ru-RU-u-kf-upper'));
 
         return newArr;
-    }
-
-    if (param === 'desc') {
-        newArr.sort((a,b) => b.localeCompare(a, 'ru-RU-u-kf-upper'));
+    } else if (param === 'desc') {
+        newArr.sort((a,b) => a.localeCompare(b, 'ru-RU-u-kf-upper'));
 
         return newArr;
     }
