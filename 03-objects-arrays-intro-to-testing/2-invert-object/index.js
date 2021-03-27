@@ -13,6 +13,6 @@ export function invertObj(obj) {
     
         return newObj;
     } else {
-        return undefined;
+        return;
     }
 }
