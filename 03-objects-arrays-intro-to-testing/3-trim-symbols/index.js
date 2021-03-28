@@ -12,28 +12,25 @@ export function trimSymbols(string, size) {
     let lastChar = "";
     let count = 0;
 
-    if (size === 0 || string === '') {
-        return "";
-    } else if (!size) {
-        return string;
-    } else {        
-        for (let i = 0; i < string.length; i++) {
-            let char = string[i];
+    if (size === 0 || string === '') return "";
+    if (!size) return string;
+    
+    for (let i = 0; i < string.length; i++) {
+        let char = string[i];
 
-            if (lastChar === char) {
-                count++;
+        if (lastChar === char) {
+            count++;
 
-                if (count < size) {
-                    resultString += char;
-                    
-                }
-            } else {
+            if (count < size) {
                 resultString += char;
-                lastChar = char;
-                count = 0;
+                
             }
+        } else {
+            resultString += char;
+            lastChar = char;
+            count = 0;
         }
-        
-        return resultString;
     }
+    
+    return resultString;
 }
