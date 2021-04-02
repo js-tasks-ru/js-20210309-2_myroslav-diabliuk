@@ -1,59 +1,56 @@
 export default class NotificationMessage {
-    constructor (message = 'default message', {
-        duration = 10,
+    constructor (message = '',{
+        duration = 1000,
         type = 'success' 
     } = {}) {
         this.message = message;
         this.duration = duration;
         this.type = type;
+
+        this.render();
     }
 
-    get createTemplate() {
+    get template() {
         return `
-            <div class="timer"></div>
-            <div class="inner-wrapper">
-                <div class="notification-header">${this.type}</div>
-                <div class="notification-body">
-                    ${this.message}
+            <div class="notification ${this.type}" style="--value: ${this.duration}ms">
+                <div class="timer"></div>
+                <div class="inner-wrapper">
+                    <div class="notification-header">${this.type}</div>
+                    <div class="notification-body">
+                        ${this.message}
+                    </div>
                 </div>
             </div>
         `
     }
 
-    messageCreate () {
-        const wrapper = document.querySelector('.wrapper');
+    render () {
         const element = document.createElement('div');
 
-        element.setAttribute('class',`notification ${this.type}`);
-        element.setAttribute('style',`--value: ${this.duration}ms`)
-        
-        element.innerHTML = this.createTemplate;
+        element.innerHTML = this.template;
 
-        return wrapper.append(element);
-    }
+        this.element = element.firstElementChild;
+	}
 
-    show() {
-        const button = document.getElementById('btn1');
-        let activeMsg = button.getAttribute('data-active-message');
-        
-        if (activeMsg === 'false') {
-            this.messageCreate();
+	additionalFunction(button = document.getElementById('btn1')) {
+		this.remove();	
+		button.setAttribute('style', 'pointer-events: auto');
+	}
+	
+	show(parent = document.body, button = document.getElementById('btn1')) {		
+		parent.append(this.element);
+		button.setAttribute('style', 'pointer-events: none');
 
-            button.setAttribute('data-active-message','true');
+		setTimeout(() => {
+			this.additionalFunction();
+		}, this.duration);
+	}
 
-            button.disabled = true;
+	remove() {
+		this.element.remove();
+	}
 
-            setTimeout(this.destroy, this.duration);
-        }
-    }
-
-    destroy() {
-        const msg = document.querySelector('.notification');
-        const button = document.getElementById('btn1');
-
-        msg.remove();
-
-        button.setAttribute('data-active-message','false');
-        button.disabled = false;
-    }
+	destroy() {
+		this.remove();
+	}
 }
