@@ -1,8 +1,14 @@
 export default class NotificationMessage {
+    static notificationActive;
+
     constructor (message = '',{
         duration = 1000,
         type = 'success' 
     } = {}) {
+        if (NotificationMessage.notificationActive) {
+            NotificationMessage.notificationActive.remove();
+        }
+
         this.message = message;
         this.duration = duration;
         this.type = type;
@@ -30,19 +36,15 @@ export default class NotificationMessage {
         element.innerHTML = this.template;
 
         this.element = element.firstElementChild;
-	}
 
-	additionalFunction(button = document.getElementById('btn1')) {
-		this.remove();	
-		button.setAttribute('style', 'pointer-events: auto');
+        NotificationMessage.notificationActive = this.element;
 	}
 	
-	show(parent = document.body, button = document.getElementById('btn1')) {		
+	show(parent = document.body) {		
 		parent.append(this.element);
-		button.setAttribute('style', 'pointer-events: none');
 
 		setTimeout(() => {
-			this.additionalFunction();
+			this.remove();
 		}, this.duration);
 	}
 
@@ -52,5 +54,7 @@ export default class NotificationMessage {
 
 	destroy() {
 		this.remove();
+
+        NotificationMessage.notificationActive = null;
 	}
 }
