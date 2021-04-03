@@ -4,10 +4,7 @@
  * @param {number} size - the allowed size of consecutive identical symbols
  * @returns {string} - the new string without extra symbols according passed size
  */
-export function trimSymbols(string, size) {
-    let returnString = "";
-    let substr = "";
-    
+export function trimSymbols(string, size) {  
     let resultString = "";
     let lastChar = "";
     let count = 0;
