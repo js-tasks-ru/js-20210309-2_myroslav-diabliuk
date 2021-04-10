@@ -108,7 +108,7 @@ export default class SortableTable {
 
         const tableHeader = document.querySelector('.sortable-table__header');
         const tableHeaderCells = tableHeader.querySelectorAll(`.sortable-table__cell`);
-        const index = this.header.findIndex(index => index.id === field);
+        const index = this.header.findIndex(item => item.id === field);
 
         tableHeaderCells.forEach(el => el.removeAttribute('data-order'));
         tableHeaderCells[index].dataset.order = value;
